@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable} from "rxjs";
 import {
   Firestore,
   Timestamp,
@@ -29,7 +29,9 @@ export class EmployeeService {
   }
 
   getEmployees(): Observable<Employee[]> {
-    return collectionData(this.employeesCollection) as Observable<Employee[]>;
+    // TODO: read the employees stored in this.employeesCollection from Firestore
+    // use collectionData()
+    return EMPTY;
   }
 
   addEmployee(employee: Employee) {
@@ -42,7 +44,8 @@ export class EmployeeService {
 
   // Firestore stores dates as Timestamps, so convert dateOfBirth back to a Date
   private convertFromFirestore(employee: Employee): Employee {
-    const dateOfBirth = (employee.dateOfBirth as unknown as Timestamp).toDate();
-    return {...employee, dateOfBirth};
+    // TODO: return a copy of the employee with dateOfBirth turned into a Date
+    // (you can use as Timestamp to cast the dateOfBirth to a Timestamp, then call toDate() on it)
+    return employee;
   }
 }
