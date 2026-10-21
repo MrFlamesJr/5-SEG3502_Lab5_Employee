@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<header class="sticky-top bg-body border-bottom border-4 border-warning" style="background-image: url(assets/circuit.svg)">
+  <div class="container d-flex justify-content-between align-items-center py-3">
+    <span class="fw-semibold text-white">{{title}}</span>
+    <span class="small fw-semibold text-warning d-none d-md-inline">Days since last crisis: 0</span>
+  </div>
+</header>
+
+<main class="container py-4">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/employee" routerLinkActive="active">Add Employee</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/employees" routerLinkActive="active">Employee List</a>
+    </li>
+  </ul>
+  <div class="bg-body border border-top-0 py-3">
+    <router-outlet></router-outlet>
+  </div>
+</main>
