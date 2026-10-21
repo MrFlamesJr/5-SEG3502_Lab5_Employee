@@ -2,6 +2,8 @@ import {Component, inject} from '@angular/core';
 import { AbstractControl, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import {EmployeeService} from "../service/employee.service";
 import { Router } from "@angular/router";
+import { NgFor } from "@angular/common";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 import {Employee} from "../model/employee";
 
 @Component({
@@ -9,7 +11,7 @@ import {Employee} from "../model/employee";
     templateUrl: './employee.component.html',
     styleUrls: ['./employee.component.css'],
     standalone: true,
-    imports: [ReactiveFormsModule]
+    imports: [ReactiveFormsModule, NgFor, NgbTooltip]
 })
 export class EmployeeComponent {
   private builder: FormBuilder = inject(FormBuilder);
@@ -30,6 +32,22 @@ export class EmployeeComponent {
   get salary(): AbstractControl<number> {return <AbstractControl<number>>this.employeeForm.get('salary'); }
   get gender(): AbstractControl<string> {return <AbstractControl<string>>this.employeeForm.get('gender'); }
   get email(): AbstractControl<string> {return <AbstractControl<string>>this.employeeForm.get('email'); }
+
+  // Same messages as the alerts in the template, shown together when hovering the disabled Submit button
+  private errorMessages: Record<string, string> = {
+    name: 'Employee Name is required.',
+    dateOfBirth: 'Date of birth is required.',
+    city: 'City of employment is required.',
+    salary: 'Salary is required.',
+    gender: 'Gender should be M, F or X.',
+    email: 'Wrong email format.'
+  };
+
+  get submitErrors(): string[] {
+    return Object.keys(this.errorMessages)
+      .filter(control => this.employeeForm.get(control)?.invalid)
+      .map(control => this.errorMessages[control]);
+  }
 
   onSubmit() {
     const employee: Employee = new Employee(this.name.value,
